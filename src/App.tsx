@@ -1,4 +1,5 @@
 import { lazy, Suspense, useCallback, useEffect, useState } from 'react'
+import Content from './components/Content'
 import Terminal from './components/Terminal'
 import { NEXT_PHASE, PHASE_DURATIONS } from './motion'
 import type { Phase } from './motion'
@@ -40,6 +41,7 @@ export default function App() {
       </div>
       {showTerminal && <Terminal fading={phase === 'fade'} onDone={handleTyped} />}
       {flash && !reduced && <div key={phase} className="flash" aria-hidden="true" />}
+      {phase === 'arrived' && <Content />}
     </main>
   )
 }

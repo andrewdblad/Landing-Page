@@ -61,7 +61,12 @@ export default function SpaceScene({ phase, reduced }: Props) {
   )
 
   return (
-    <Canvas camera={{ position: [0, 0, 0], fov: 60, near: 0.1, far: 1000 }} dpr={[1, 2]}>
+    <Canvas
+      camera={{ position: [0, 0, 0], fov: 60, near: 0.1, far: 1000 }}
+      dpr={[1, 2]}
+      eventSource={document.getElementById('root') ?? undefined}
+      eventPrefix="client"
+    >
       <color attach="background" args={['#000000']} />
       {/* Distant warp stars fade into black instead of piling up at the center */}
       <fog attach="fog" args={['#000000', 40, 320]} />
