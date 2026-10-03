@@ -3,7 +3,7 @@ import { CubeIcon, GitHubIcon, GmailIcon, LinkedInIcon, PhoneIcon } from './Icon
 import byuIdahoLogo from '../assets/logos/byu-idaho.svg'
 import premeraLogo from '../assets/logos/premera-blue-cross.svg'
 import wincoLogo from '../assets/logos/winco-foods.svg'
-import trailerLoadingImage from '../assets/projects/trailer-loading-placeholder.svg'
+import trailerLoadingImage from '../assets/projects/trailer-loading.jpg'
 
 type ContactLink = {
   label: string
@@ -62,9 +62,8 @@ const SECTIONS: Section[] = [
         description:
           'Distribution center trailer loading 3D model concept. Developed using C#/.Net backend and React + Three.js.',
         tech: ['C#', '.NET', 'React', 'Three.js'],
-        // Replace the placeholder import above with a real screenshot
         image: trailerLoadingImage,
-        // href: 'https://…', // add a repo or demo link to make the card clickable
+        href: 'https://trailer.andrewblad.dev',
       },
     ],
     wide: true,
