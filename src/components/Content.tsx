@@ -26,6 +26,7 @@ type Project = {
   tech: string[]
   image: string
   href?: string // when set, the whole card links here and shows "Click to view"
+  repo?: string // source code link, shown as a "View code" button
 }
 
 type Section = {
@@ -64,6 +65,7 @@ const SECTIONS: Section[] = [
         tech: ['C#', '.NET', 'React', 'Three.js'],
         image: trailerLoadingImage,
         href: 'https://trailer.andrewblad.dev',
+        repo: 'https://github.com/andrewdblad/trailer-loading',
       },
     ],
     wide: true,
@@ -165,9 +167,9 @@ export default function Content() {
               <p className="panel-body">{s.body}</p>
               {s.projects && (
                 <ul className="projects">
-                  {s.projects.map((project) => {
-                    const body = (
-                      <>
+                  {s.projects.map((project) => (
+                    <li key={project.title}>
+                      <article className={`project-card${project.href ? ' project-card--link' : ''}`}>
                         <div className="project-media">
                           <img
                             className="project-image"
@@ -185,38 +187,41 @@ export default function Content() {
                           <span className="project-icon">
                             <CubeIcon />
                           </span>
-                          <h3>{project.title}</h3>
+                          <h3>
+                            {project.href ? (
+                              // Stretched over the whole card, so clicking anywhere opens the demo
+                              <a className="project-link" href={project.href} target="_blank" rel="noopener noreferrer">
+                                {project.title}
+                              </a>
+                            ) : (
+                              project.title
+                            )}
+                          </h3>
                           <p>{project.description}</p>
                           <ul className="tags tags--small" aria-label="Built with">
                             {project.tech.map((t) => (
                               <li key={t}>{t}</li>
                             ))}
                           </ul>
-                          {project.href && (
-                            <span className="project-cta">
-                              Click to view <span aria-hidden="true">→</span>
-                            </span>
+                          {(project.href || project.repo) && (
+                            <div className="project-actions">
+                              {project.href && (
+                                <span className="project-cta" aria-hidden="true">
+                                  Click to view <span>→</span>
+                                </span>
+                              )}
+                              {project.repo && (
+                                <a className="project-repo" href={project.repo} target="_blank" rel="noopener noreferrer">
+                                  <GitHubIcon />
+                                  View code
+                                </a>
+                              )}
+                            </div>
                           )}
                         </div>
-                      </>
-                    )
-                    return (
-                      <li key={project.title}>
-                        {project.href ? (
-                          <a
-                            className="project-card project-card--link"
-                            href={project.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {body}
-                          </a>
-                        ) : (
-                          <div className="project-card">{body}</div>
-                        )}
-                      </li>
-                    )
-                  })}
+                      </article>
+                    </li>
+                  ))}
                 </ul>
               )}
               {s.timeline && (
