@@ -1,9 +1,10 @@
 import type { ComponentType } from 'react'
-import { CubeIcon, GitHubIcon, GmailIcon, LinkedInIcon, PhoneIcon } from './Icons'
+import { BarcodeIcon, CubeIcon, GitHubIcon, GmailIcon, LinkedInIcon, PhoneIcon } from './Icons'
 import byuIdahoLogo from '../assets/logos/byu-idaho.svg'
 import premeraLogo from '../assets/logos/premera-blue-cross.svg'
 import wincoLogo from '../assets/logos/winco-foods.svg'
 import trailerLoadingImage from '../assets/projects/trailer-loading.jpg'
+import lactoseScannerImage from '../assets/projects/lactose-scanner.jpg'
 
 type ContactLink = {
   label: string
@@ -26,7 +27,9 @@ type Project = {
   tech: string[]
   image: string
   href?: string // when set, the whole card links here and shows "Click to view"
+  cta?: string // link label; defaults to "Click to view"
   repo?: string // source code link, shown as a "View code" button
+  Icon?: ComponentType<{ className?: string }> // defaults to a cube
 }
 
 type Section = {
@@ -66,6 +69,16 @@ const SECTIONS: Section[] = [
         image: trailerLoadingImage,
         href: 'https://trailer.andrewblad.dev',
         repo: 'https://github.com/andrewdblad/trailer-loading',
+      },
+      {
+        title: 'Lactose Free Scanner',
+        description:
+          'iOS app that scans grocery barcodes and checks the Open Food Facts database to tell people with a lactose allergy whether a product is safe.',
+        tech: ['Swift', 'SwiftUI', 'Open Food Facts API'],
+        image: lactoseScannerImage,
+        href: 'https://github.com/andrewdblad/Lactose-Scanner-iOS',
+        cta: 'View on GitHub',
+        Icon: BarcodeIcon,
       },
     ],
     wide: true,
@@ -179,13 +192,13 @@ export default function Content() {
                           />
                           <span className="project-overlay" aria-hidden="true">
                             <span className="project-overlay-pill">
-                              {project.href ? 'Click to view ↗' : 'Link coming soon'}
+                              {project.href ? `${project.cta ?? 'Click to view'} ↗` : 'Link coming soon'}
                             </span>
                           </span>
                         </div>
                         <div className="project-body">
                           <span className="project-icon">
-                            <CubeIcon />
+                            {project.Icon ? <project.Icon /> : <CubeIcon />}
                           </span>
                           <h3>
                             {project.href ? (
@@ -207,7 +220,7 @@ export default function Content() {
                             <div className="project-actions">
                               {project.href && (
                                 <span className="project-cta" aria-hidden="true">
-                                  Click to view <span>→</span>
+                                  {project.cta ?? 'Click to view'} <span>→</span>
                                 </span>
                               )}
                               {project.repo && (
