@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 const FIRST = 'Hello! My name is Andrew Blad.'
-const SECOND = 'Hold on tight. Jumping in 3… 2… 1…'
+const SECOND = 'Hold on tight. Jumping in\n3…\n2…\n1…'
 
 type Frame = { text: string; delay?: number } // no delay = a random typing keystroke
 

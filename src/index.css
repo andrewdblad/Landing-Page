@@ -17,12 +17,13 @@ body { margin: 0; background: var(--bg); overflow: hidden; }
 
 .terminal {
   position: fixed; inset: 0;
-  display: grid; place-items: center;
-  padding: 0 1.5rem;
+  /* Anchor the first line so the countdown grows downward without jumping */
+  display: grid; place-items: start center;
+  padding: 42vh 1.5rem 0;
   pointer-events: none;
 }
 .terminal-line {
-  width: min(100%, 39ch);
+  width: min(100%, 35ch);
   margin: 0;
   font-family: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
   font-size: clamp(1rem, 2.8vw, 1.6rem);
