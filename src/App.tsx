@@ -33,7 +33,7 @@ export default function App() {
 
   return (
     <main>
-      <h1 className="sr-only">{MESSAGE}</h1>
+      {phase !== 'arrived' && <h1 className="sr-only">{MESSAGE}</h1>}
       <div className="scene" aria-hidden="true">
         <Suspense fallback={null}>
           <SpaceScene phase={phase} reduced={reduced} />
