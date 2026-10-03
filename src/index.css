@@ -1,23 +1,69 @@
 :root {
-  --bg: #07060f;
-  --fg: #ecebf5;
+  --bg: #000;
+  --terminal: #f4f4f4;
   font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  color: var(--fg);
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
 }
 
 * { box-sizing: border-box; }
-body { margin: 0; }
+body { margin: 0; background: var(--bg); overflow: hidden; }
 
-.hero {
-  position: relative; min-height: 100vh; min-height: 100dvh;
-  display: grid; place-items: center; overflow: hidden;
-}
-.hero-canvas { position: absolute; inset: 0; }
-.hero h1 {
-  position: relative; margin: 0; padding: 0 1rem; text-align: center;
-  font-size: clamp(2.75rem, 10vw, 7rem); line-height: 1; letter-spacing: -0.03em;
+.scene { position: fixed; inset: 0; }
+
+.terminal {
+  position: fixed; inset: 0;
+  display: grid; place-items: center;
+  padding: 0 1.5rem;
   pointer-events: none;
-  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+}
+.terminal-line {
+  width: min(100%, 39ch);
+  margin: 0;
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  font-size: clamp(1rem, 2.8vw, 1.6rem);
+  line-height: 1.6;
+  color: var(--terminal);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.35);
+  white-space: pre-wrap;
+}
+.prompt { opacity: 0.7; }
+.cursor {
+  display: inline-block;
+  width: 0.6em; height: 1.15em;
+  margin-left: 2px;
+  vertical-align: -0.2em;
+  background: currentColor;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+.cursor--blink { animation: blink 1s steps(1) infinite; }
+.terminal--out { animation: terminal-out 0.6s ease-in forwards; }
+
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes terminal-out {
+  to { opacity: 0; filter: blur(4px); transform: scale(1.04); }
+}
+
+/* White-blue flash when entering and leaving hyperspace */
+.flash {
+  position: fixed; inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at center,
+    rgba(255, 255, 255, 0.95), rgba(170, 200, 255, 0.6) 40%, rgba(120, 160, 255, 0) 75%);
+  animation: flash 0.7s ease-out forwards;
+}
+@keyframes flash {
+  0% { opacity: 0; }
+  15% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor--blink { animation: none; }
 }
